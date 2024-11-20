@@ -1,0 +1,78 @@
+//    @Override
+//    public List<MyMessage> getInboxMessages() {
+//        // to receive emails
+//        Properties properties = new Properties();
+//        properties.setProperty("mail.store.protocol",protocol);
+//        properties.setProperty("mail.imaps.host",host);
+//        properties.setProperty("mail.imaps.port",port);
+//
+//        Session session = Session.getDefaultInstance(properties);
+//        try {
+//           Store store = session.getStore();
+//
+//           store.connect(username,password);
+//
+//           Folder inbox = store.getFolder("INBOX");
+//            inbox.open(Folder.READ_ONLY);
+//            Message[] messages = inbox.getMessages();
+//            List<MyMessage> inboxMails = new ArrayList<>();
+//
+//            for(Message message: messages){
+////                log.info(message.getSubject());
+////                log.info("--------------------");
+//
+//                String content = getContentFromEmail(message);
+//                List<String> files = getFilesFromEmail(message);
+//
+//                inboxMails.add(MyMessage.builder()
+//                                .subject(message.getSubject())
+//                                .content(content)
+//                                .files(files)
+//                        .build());
+//            }
+//            return inboxMails;
+//
+//        } catch (MessagingException | IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
+//
+//    private List<String> getFilesFromEmail(Message message) throws MessagingException, IOException {
+//
+//        List<String> files = new ArrayList<>();
+//        if(message.isMimeType("multipart/*")){
+//            Multipart content = (Multipart)message.getContent();
+//            for(int i=0;i<content.getCount();i++){
+//                BodyPart bodyPart = content.getBodyPart(i);
+//                if(Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())){
+//                    InputStream stream = bodyPart.getInputStream();
+//                    File file = new File("src/main/resources/static/received/" + bodyPart.getFileName());
+//                    // saving the file
+//                    Files.copy(stream,file.toPath(),StandardCopyOption.REPLACE_EXISTING);
+//                    // make urls
+//                    files.add(file.getAbsolutePath());
+//
+//                }
+//            }
+//        }
+//        return files;
+//    }
+//
+//    private String getContentFromEmail(Message message) throws MessagingException, IOException {
+//        if(message.isMimeType("text/plain") || message.isMimeType("text/html"))
+//        {
+//            return (String) message.getContent();
+//        }
+//        else if (message.isMimeType("multipart/*"))
+//        {
+//            Multipart part =  (Multipart)message.getContent();
+//            for(int i=0;i< part.getCount();i++){
+//                BodyPart bodyPart = part.getBodyPart(i);
+//                if(bodyPart.isMimeType("text/plain")){
+//                    return (String)bodyPart.getContent();
+//                }
+//            }
+//        }
+//        return null;
+//    }
